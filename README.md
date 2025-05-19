@@ -22,7 +22,7 @@ AthleteIQ is a Flask-based web app where users can search for a professional soc
 ---
 
 ## 📁 Project Structure
-'''
+```
 AthleteIQ/
 ├── app/
 │   ├── __init__.py          # Creates Flask app instance
@@ -38,7 +38,7 @@ AthleteIQ/
 ├── requirements.txt         # Installed packages (Flask, requests etc.) 
 ├── README.md                # Project overview, setup, features
 └── .gitignore               # Ignore virtual env, .env, cache files
-'''
+```
 Next step for now:
 Take the API response from get_player_data(name) and: in routes.py
 
