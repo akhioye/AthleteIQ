@@ -12,6 +12,7 @@ def index():
 def player():
     name = request.args.get("name")
     league = request.args.get("league")
+
     if not name:
         return "Player name is required", 400
     if not league:
@@ -31,12 +32,23 @@ def player():
         league_id = 78
     elif league == "Ligue 1":
         league_id = 61
+    elif league == "Eredivisie":
+        league_id = 88
+    elif league == "MLS":
+        league_id = 19
+    elif league == "UEFA Champions League":
+        league_id = 2
+    elif league == "UEFA Europa League":
+        league_id = 3
+    elif league == "Saudi Pro League":
+        league_id = 307
+
    
     
     player_data = get_player_data(player_name, league_id)
 
 
     
-    return render_template("player.html", player_name=name)
+    return render_template("player.html", player_name=name,player_data=player_data)
 
     

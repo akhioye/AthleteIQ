@@ -6,5 +6,6 @@
     <body>
         <h1>Results for {{ player_name }}</h1>
         <p>Player stats and news will go here.</p>
+        <pre> {{player_data | tojson(indent=2)}} </pre>
     </body>
 </html>
