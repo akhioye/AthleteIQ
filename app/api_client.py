@@ -1,7 +1,7 @@
 import requests
 import os 
 import json
-from urllib.parse import quote_plus as qoute_plus
+from urllib.parse import quote_plus as quote_plus
 
 API_KEY = os.getenv("FOOTBALL_API_KEY")
 
@@ -49,7 +49,7 @@ def get_player_data(player_name,league_id):
         last_name = player_name
 
     #handle special characters in name
-    encoded_name = qoute_plus(last_name.strip())
+    encoded_name = quote_plus(last_name.strip())
 
     url = f"https://v3.football.api-sports.io/players?search={encoded_name}&league={league_id}&season={season}"
     headers = {
@@ -57,16 +57,29 @@ def get_player_data(player_name,league_id):
     }
 
     response = requests.get(url, headers=headers)
-    print(f"API URL: {url}")
+    print("API URL: {url}")
     if response.status_code == 200:
         data = response.json()
 
-        if data is None:
-            print("No data found for the player.")
+        if data and data["response"] :
+            player = data["response"][0] # first matching player
+
+            return {
+                "name": player["player"]["name"],
+                "age": player["player"]["age"],
+                "photo": player["player"]["photo"],
+                "team": player["statistics"][0]["team"]["name"],
+                "appearances": player["statistics"][0]["games"].get("appearences", 0),
+                "goals": player["statistics"][0]["goals"].get("total", 0),
+                "assists": player["statistics"][0]["goals"].get("assists", 0)
+            }
+
+        else:
+            print("No player found.")
             return None
-        else :
-            print("API Response: ")
-            print(data)
+    else:
+        print(f"API error: {response.status_code}")
+        return None
 
             # I still need to handle special characters in the name
             # Check if there is more than one player
@@ -79,9 +92,4 @@ def get_player_data(player_name,league_id):
             #             print(player)
             #             return player
 
-            return data  # We’ll extract specific info later
-    
-    else:
-        print(f"API error: {response.status_code}")
-        return None
     

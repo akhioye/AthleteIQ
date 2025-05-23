@@ -22,27 +22,22 @@ def player():
     player_name = name.strip()
 
     # Map league names to their respective IDs
-    if league == "Premier League":
-        league_id = 39
-    elif league == "La Liga":  
-        league_id = 140
-    elif league == "Serie A":
-        league_id = 135
-    elif league == "Bundesliga":
-        league_id = 78
-    elif league == "Ligue 1":
-        league_id = 61
-    elif league == "Eredivisie":
-        league_id = 88
-    elif league == "MLS":
-        league_id = 19
-    elif league == "UEFA Champions League":
-        league_id = 2
-    elif league == "UEFA Europa League":
-        league_id = 3
-    elif league == "Saudi Pro League":
-        league_id = 307
+    LEAGUE_IDS = {
+        "Premier League" : 39,
+        "La Liga" : 140,
+        "Serie A" : 135,
+        "Bundesliga" : 78,
+        "Ligue 1" : 61,
+        "Eredivisie" : 88,
+        "MLS" : 19,
+        "UEFA Champions League" : 2,
+        "UEFA Europa League" : 3,
+        "Saudi Pro League" : 307
+    }
 
+    league_id = LEAGUE_IDS.get(league)
+    if not league_id:
+        return "Invalid league", 400
    
     
     player_data = get_player_data(player_name, league_id)
